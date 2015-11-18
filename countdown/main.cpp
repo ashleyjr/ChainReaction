@@ -4,13 +4,15 @@
 
 #include "mbed.h"
 
+#define PERIOD 0.02f
+
 // Class instances
 DigitalOut  led(LED1);
-PwmOut      servo_1(D1);
-PwmOut      servo_2(D2);
-PwmOut      servo_3(D3);
-PwmOut      servo_4(D4);
-PwmOut      servo_5(D5);
+PwmOut      servo_1(D2);
+PwmOut      servo_2(D3);
+PwmOut      servo_3(D4);
+PwmOut      servo_4(D5);
+PwmOut      servo_5(D6);
 Ticker      countdown;
 
 
@@ -31,38 +33,90 @@ int main() {
     action = true;                                  // Go straight into first state action
     countdown.attach(&down, 1);                     // Point to ticker
     
-    servo_1.period(0.001f);                         // Frequency of pwm to drive servo
+    servo_1.period(PERIOD);                         // Frequency of pwm to drive servo
+    servo_2.period(PERIOD);
+    servo_3.period(PERIOD);
+    servo_4.period(PERIOD);
+    servo_5.period(PERIOD);
     while(count > 0){                               // Keep in loop until count reaches zero
         if(action){                                 // Ticker has to start an action
             switch(count){
-                case 6:     servo_1.write(0.5f);
-                            wait(0.5);
+                case 6:     servo_1.write(0.1f);
+                            servo_2.write(0.2f);
+                            servo_3.write(0.3f);
+                            servo_4.write(0.4f);
+                            servo_5.write(0.5f);
+                            wait(0.6);
                             servo_1.write(0.0f);
+                            servo_2.write(0.0f);
+                            servo_3.write(0.0f);
+                            servo_4.write(0.0f);
+                            servo_5.write(0.0f);
                             break;
                             
-                case 5:     servo_1.write(0.45f);
+                case 5:     servo_1.write(0.5f);
+                            servo_2.write(0.4f);
+                            servo_3.write(0.3f);
+                            servo_4.write(0.2f);
+                            servo_5.write(0.1f);
                             wait(0.5);
                             servo_1.write(0.0f);
+                            servo_2.write(0.0f);
+                            servo_3.write(0.0f);
+                            servo_4.write(0.0f);
+                            servo_5.write(0.0f);
                             break;
                             
-                case 4:     servo_1.write(0.3f);
-                            wait(0.5);
+                case 4:     servo_1.write(0.9f);
+                            servo_2.write(0.9f);
+                            servo_3.write(0.9f);
+                            servo_4.write(0.9f);
+                            servo_5.write(0.9f);
+                            wait(0.4);
                             servo_1.write(0.0f);
+                            servo_2.write(0.0f);
+                            servo_3.write(0.0f);
+                            servo_4.write(0.0f);
+                            servo_5.write(0.0f);
                             break;
                             
-                case 3:     servo_1.write(0.25f);
-                            wait(0.5);
+                case 3:     servo_1.write(0.5f);
+                            servo_2.write(0.5f);
+                            servo_3.write(0.5f);
+                            servo_4.write(0.5f);
+                            servo_5.write(0.5f);
+                            wait(0.3);
                             servo_1.write(0.0f);
+                            servo_2.write(0.0f);
+                            servo_3.write(0.0f);
+                            servo_4.write(0.0f);
+                            servo_5.write(0.0f);
                             break;
                             
-                case 2:     servo_1.write(0.2f);
-                            wait(0.5);
+                case 2:     servo_1.write(0.5f);
+                            servo_2.write(0.5f);
+                            servo_3.write(0.5f);
+                            servo_4.write(0.5f);
+                            servo_5.write(0.5f);
+                            wait(0.2);
                             servo_1.write(0.0f);
+                            servo_2.write(0.0f);
+                            servo_3.write(0.0f);
+                            servo_4.write(0.0f);
+                            servo_5.write(0.0f);
                             break;
                             
-                case 1:     servo_1.write(0.15f);
-                            wait(0.5);
+                case 1:     servo_1.write(0.5f);
+                            servo_2.write(0.5f);
+                            servo_3.write(0.5f);
+                            servo_4.write(0.5f);
+                            servo_5.write(0.5f);
+                            wait(0.1);
                             servo_1.write(0.0f);
+                            servo_2.write(0.0f);
+                            servo_3.write(0.0f);
+                            servo_4.write(0.0f);
+                            servo_5.write(0.0f);
                             break;
             }
             action = false;
@@ -70,3 +124,4 @@ int main() {
     }
 
     while(1){}  // Lock up, job done
+}
