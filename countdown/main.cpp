@@ -8,6 +8,7 @@
 
 // Class instances
 DigitalOut  led(LED1);
+DigitalIn   trigger(USER_BUTTON);
 PwmOut      servo_1(D2);
 PwmOut      servo_2(D3);
 PwmOut      servo_3(D4);
@@ -28,16 +29,26 @@ void down() {
 }
 
 int main() {
-    led = 1;                                        // On to start
-    count = 6;                                      // The first states
-    action = true;                                  // Go straight into first state action
-    countdown.attach(&down, 1);                     // Point to ticker
+    int trigger_state;
     
+    // PWM setup
     servo_1.period(PERIOD);                         // Frequency of pwm to drive servo
     servo_2.period(PERIOD);
     servo_3.period(PERIOD);
     servo_4.period(PERIOD);
     servo_5.period(PERIOD);
+    
+    
+    // Hang until trigger changes state
+    trigger_state = trigger;
+    while(trigger_state == trigger);
+    led = 1;                                        // On to start
+    count = 6;                                      // The first states
+    action = true;                                  // Go straight into first state action
+    countdown.attach(&down, 1);                     // Point to ticker, start counting
+    
+    
+    // Do the routine
     while(count > 0){                               // Keep in loop until count reaches zero
         if(action){                                 // Ticker has to start an action
             switch(count){
