@@ -53,81 +53,31 @@ int main() {
         if(action){                                 // Ticker has to start an action
             switch(count){
                 case 6:     servo_1.write(0.1f);
-                            servo_2.write(0.2f);
-                            servo_3.write(0.3f);
-                            servo_4.write(0.4f);
-                            servo_5.write(0.5f);
-                            wait(0.6);
-                            servo_1.write(0.0f);
-                            servo_2.write(0.0f);
-                            servo_3.write(0.0f);
-                            servo_4.write(0.0f);
-                            servo_5.write(0.0f);
-                            break;
-                            
-                case 5:     servo_1.write(0.5f);
-                            servo_2.write(0.4f);
-                            servo_3.write(0.3f);
-                            servo_4.write(0.2f);
-                            servo_5.write(0.1f);
                             wait(0.5);
                             servo_1.write(0.0f);
-                            servo_2.write(0.0f);
-                            servo_3.write(0.0f);
-                            servo_4.write(0.0f);
-                            servo_5.write(0.0f);
                             break;
                             
-                case 4:     servo_1.write(0.9f);
-                            servo_2.write(0.9f);
-                            servo_3.write(0.9f);
-                            servo_4.write(0.9f);
-                            servo_5.write(0.9f);
-                            wait(0.4);
+                case 5:     servo_1.write(0.1f);
+                            wait(0.5);
                             servo_1.write(0.0f);
-                            servo_2.write(0.0f);
-                            servo_3.write(0.0f);
-                            servo_4.write(0.0f);
-                            servo_5.write(0.0f);
                             break;
                             
-                case 3:     servo_1.write(0.5f);
-                            servo_2.write(0.5f);
-                            servo_3.write(0.5f);
-                            servo_4.write(0.5f);
-                            servo_5.write(0.5f);
-                            wait(0.3);
+                case 4:     servo_1.write(0.1f);
+                            wait(0.5);
                             servo_1.write(0.0f);
-                            servo_2.write(0.0f);
-                            servo_3.write(0.0f);
-                            servo_4.write(0.0f);
-                            servo_5.write(0.0f);
                             break;
                             
-                case 2:     servo_1.write(0.5f);
-                            servo_2.write(0.5f);
-                            servo_3.write(0.5f);
-                            servo_4.write(0.5f);
-                            servo_5.write(0.5f);
-                            wait(0.2);
+                case 3:     servo_1.write(0.1f);
+                            wait(0.5);
                             servo_1.write(0.0f);
-                            servo_2.write(0.0f);
-                            servo_3.write(0.0f);
-                            servo_4.write(0.0f);
-                            servo_5.write(0.0f);
                             break;
                             
-                case 1:     servo_1.write(0.5f);
-                            servo_2.write(0.5f);
-                            servo_3.write(0.5f);
-                            servo_4.write(0.5f);
-                            servo_5.write(0.5f);
-                            wait(0.1);
+                case 2:     servo_1.write(0.1f);
+                            wait(0.5);
                             servo_1.write(0.0f);
-                            servo_2.write(0.0f);
-                            servo_3.write(0.0f);
-                            servo_4.write(0.0f);
-                            servo_5.write(0.0f);
+                            break;
+                            
+                case 1:     
                             break;
             }
             action = false;
