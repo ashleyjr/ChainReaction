@@ -11,9 +11,7 @@ DigitalOut  led(LED1);
 DigitalIn   trigger(USER_BUTTON);
 PwmOut      servo_1(D2);
 PwmOut      servo_2(D3);
-PwmOut      servo_3(D4);
-PwmOut      servo_4(D5);
-PwmOut      servo_5(D6);
+DigitalOut  relay(D4);
 Ticker      countdown;
 
 
@@ -34,9 +32,10 @@ int main() {
     // PWM setup
     servo_1.period(PERIOD);                         // Frequency of pwm to drive servo
     servo_2.period(PERIOD);
-    servo_3.period(PERIOD);
-    servo_4.period(PERIOD);
-    servo_5.period(PERIOD);
+
+
+    // Digital out setup
+    relay = 0;
     
     
     // Hang until trigger changes state
@@ -57,19 +56,32 @@ int main() {
                             servo_1.write(0.0f);
                             break;
                             
-                case 5:     servo_1.write(0.1f);
+                case 5:     servo_2.write(0.1f);
                             wait(0.5);
-                            servo_1.write(0.0f);
+                            servo_2.write(0.0f);
                             break;
                             
-                case 4:     servo_1.write(0.1f);
-                            wait(0.5);
-                            servo_1.write(0.0f);
+                case 4:     relay = 1;
+                            wait(0.1);
+                            relay = 0;
+                            wait(0.1);
+                            relay = 1;
+                            wait(0.1);
+                            relay = 0;
+                            wait(0.1);
+                            relay = 1;
+                            wait(0.1);
+                            relay = 0;
+                            wait(0.1);
+                            relay = 1;
+                            wait(0.1);
+                            relay = 0;
+                            wait(0.1);
                             break;
                             
-                case 3:     servo_1.write(0.1f);
+                case 3:     servo_2.write(0.1f);
                             wait(0.5);
-                            servo_1.write(0.0f);
+                            servo_2.write(0.0f);
                             break;
                             
                 case 2:     servo_1.write(0.1f);
