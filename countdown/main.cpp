@@ -9,90 +9,123 @@
 // Class instances
 DigitalOut  led(LED1);
 DigitalIn   trigger(USER_BUTTON);
-PwmOut      servo_1(D2);
-PwmOut      servo_2(D3);
-DigitalOut  relay(D4);
+PwmOut      cdi_rocket(D2);
+PwmOut      wat_rocket(D3);
+PwmOut      css_rocket(D4);
+DigitalOut  sol_rocket(D5);
+DigitalOut  flipchart(D6);
 Ticker      countdown;
 
 
 // Globals
 volatile int count;
-volatile bool action;
 
-// Ticks down once every second
+// Ticks down once every ms
 void down() {
-    led = !led;
     count--;
-    action = true;
 }
 
 int main() {
     int trigger_state;
+    int count_last;
     
     // PWM setup
-    servo_1.period(PERIOD);                         // Frequency of pwm to drive servo
-    servo_2.period(PERIOD);
-
+    cdi_rocket.period(PERIOD);                         // Frequency of pwm to drive servo
+    wat_rocket.period(PERIOD);
+    css_rocket.period(PERIOD);
 
     // Digital out setup
-    relay = 0;
+    sol_rocket = 0;
+    flipchart = 0;
+    led = 0;
     
     
     // Hang until trigger changes state
     trigger_state = trigger;
     while(trigger_state == trigger);
-    led = 1;                                        // On to start
-    count = 6;                                      // The first states
-    action = true;                                  // Go straight into first state action
-    countdown.attach(&down, 1);                     // Point to ticker, start counting
+    
+    // Countdown start
+    count = 6001;                                   // Time in 1ms chunks
+    count_last = count;
+    countdown.attach(&down, 0.001);                 // Point to ticker, start counting
     
     
-    // Do the routine
+    // Do the routine which updates every 1ms
     while(count > 0){                               // Keep in loop until count reaches zero
-        if(action){                                 // Ticker has to start an action
-            switch(count){
-                case 6:     servo_1.write(0.1f);
-                            wait(0.5);
-                            servo_1.write(0.0f);
+        if(count != count_last){                    // Ticker has to start an action
+            switch(count){  
+            
+                // Reveal flipchart 5
+                case 6000:  led = 1;
+                            flipchart = 1;
                             break;
                             
-                case 5:     servo_2.write(0.1f);
-                            wait(0.5);
-                            servo_2.write(0.0f);
+                case 5800:  led = 0;
+                            flipchart = 0;
                             break;
                             
-                case 4:     relay = 1;
-                            wait(0.1);
-                            relay = 0;
-                            wait(0.1);
-                            relay = 1;
-                            wait(0.1);
-                            relay = 0;
-                            wait(0.1);
-                            relay = 1;
-                            wait(0.1);
-                            relay = 0;
-                            wait(0.1);
-                            relay = 1;
-                            wait(0.1);
-                            relay = 0;
-                            wait(0.1);
+                            
+                // Reveal flipchart 4
+                case 5000:  led = 1;
+                            flipchart = 1;
                             break;
                             
-                case 3:     servo_2.write(0.1f);
-                            wait(0.5);
-                            servo_2.write(0.0f);
+                case 4800:  led = 0;
+                            flipchart = 0;
                             break;
                             
-                case 2:     servo_1.write(0.1f);
-                            wait(0.5);
-                            servo_1.write(0.0f);
+                
+                // Reveal flipchart 3 and launch water rocket
+                case 4000:  led = 1;
+                            flipchart = 1;
+                            wat_rocket.write(0.1f);
                             break;
                             
-                case 1:     
+                case 3800:  led = 0;
+                            flipchart = 0;
+                            wat_rocket.write(0.0f);
                             break;
+                            
+                
+                // Reveal flipchart 2 and launch c02 rocket
+                case 3000:  led = 1;
+                            flipchart = 1;
+                            cdi_rocket.write(0.1f);
+                            break;
+                            
+                case 2800:  led = 0;
+                            flipchart = 0;
+                            cdi_rocket.write(0.0f);
+                            break;
+                            
+                      
+                // Reveal flipchart 1 and launch solid rocket
+                case 2000:  led = 1;
+                            flipchart = 1;
+                            sol_rocket = 1;
+                            break;
+                            
+                case 1800:  led = 0;
+                            flipchart = 0;
+                            sol_rocket = 0;
+                            break;   
+                            
+                            
+                // Reveal flipchart 0 and launch css rocket
+                case 1000:  led = 1;
+                            flipchart = 1;
+                            cdi_rocket.write(0.1f);
+                            break;
+                            
+                case 800:   led = 0;
+                            flipchart = 0;
+                            cdi_rocket.write(0.0f);
+                            break;   
+                
+                
+               
             }
-            action = false;
+            count_last = count;
         }
     }
 
