@@ -11,9 +11,9 @@ DigitalOut  led(LED1);
 DigitalIn   trigger(USER_BUTTON);
 PwmOut      cdi_rocket(D2);
 PwmOut      wat_rocket(D3);
-PwmOut      css_rocket(D4);
-DigitalOut  sol_rocket(D5);
-DigitalOut  flipchart(D6);
+PwmOut      css_rocket(D6);
+DigitalOut  sol_rocket(D4);
+DigitalOut  flipchart(D5);
 Ticker      countdown;
 
 
@@ -41,11 +41,17 @@ int main() {
     
     
     // Hang until trigger changes state
+    flipchart = 1;
+    trigger_state = trigger;
+    while(trigger_state == trigger);
+    flipchart = 0;
+    wait(0.1);
     trigger_state = trigger;
     while(trigger_state == trigger);
     
+    
     // Countdown start
-    count = 6001;                                   // Time in 1ms chunks
+    count = 18001;                                   // Time in 1ms chunks
     count_last = count;
     countdown.attach(&down, 0.001);                 // Point to ticker, start counting
     
@@ -56,72 +62,74 @@ int main() {
             switch(count){  
             
                 // Reveal flipchart 5
-                case 6000:  led = 1;
+                case 18000:  led = 1;
                             flipchart = 1;
                             break;
                             
-                case 5800:  led = 0;
+                case 17400:  led = 0;
                             flipchart = 0;
                             break;
                             
                             
                 // Reveal flipchart 4
-                case 5000:  led = 1;
+                case 15000:  led = 1;
                             flipchart = 1;
                             break;
                             
-                case 4800:  led = 0;
+                case 14400:  led = 0;
                             flipchart = 0;
                             break;
                             
                 
                 // Reveal flipchart 3 and launch water rocket
-                case 4000:  led = 1;
+                case 12000:  led = 1;
                             flipchart = 1;
                             wat_rocket.write(0.1f);
                             break;
                             
-                case 3800:  led = 0;
+                case 11400: led = 0;
                             flipchart = 0;
-                            wat_rocket.write(0.0f);
                             break;
                             
+                case 9001: wat_rocket.write(0.0f);
+                            break;
                 
                 // Reveal flipchart 2 and launch c02 rocket
-                case 3000:  led = 1;
+                case 9000:  led = 1;
                             flipchart = 1;
                             cdi_rocket.write(0.1f);
                             break;
                             
-                case 2800:  led = 0;
+                case 8400:  led = 0;
                             flipchart = 0;
                             cdi_rocket.write(0.0f);
                             break;
                             
                       
                 // Reveal flipchart 1 and launch solid rocket
-                case 2000:  led = 1;
+                case 6000:  led = 1;
                             flipchart = 1;
                             sol_rocket = 1;
                             break;
                             
-                case 1800:  led = 0;
+                case 5400: led = 0;
                             flipchart = 0;
                             sol_rocket = 0;
                             break;   
                             
                             
                 // Reveal flipchart 0 and launch css rocket
-                case 1000:  led = 1;
+                case 3000:  led = 1;
                             flipchart = 1;
-                            cdi_rocket.write(0.1f);
+                            css_rocket.write(0.1f);
                             break;
                             
-                case 800:   led = 0;
+                case 2400:  led = 0;
                             flipchart = 0;
-                            cdi_rocket.write(0.0f);
+                            css_rocket.write(0.0f);
                             break;   
-                
+                            
+                            
                 
                
             }
