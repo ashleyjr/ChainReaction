@@ -8,12 +8,13 @@
 
 // Class instances
 DigitalOut  led(LED1);
-DigitalIn   trigger(USER_BUTTON);
-PwmOut      cdi_rocket(D2);
-PwmOut      wat_rocket(D3);
-PwmOut      css_rocket(D6);
-DigitalOut  sol_rocket(D4);
-DigitalOut  flipchart(D5);
+DigitalIn   index_flip(USER_BUTTON);
+DigitalIn   trigger(D7);
+PwmOut      cdi_rocket(D6);
+PwmOut      wat_rocket(D5);
+PwmOut      css_rocket(D4);
+DigitalOut  sol_rocket(D3);
+DigitalOut  flipchart(D2);
 Ticker      countdown;
 
 
@@ -40,15 +41,15 @@ int main() {
     led = 0;
     
     
-    // Hang until trigger changes state
-    flipchart = 1;
-    trigger_state = trigger;
-    while(trigger_state == trigger);
-    flipchart = 0;
-    wait(0.1);
-    trigger_state = trigger;
-    while(trigger_state == trigger);
-    
+    // Hang until trigger changes state and index if needed
+    while(trigger == 0){
+        if(index_flip){
+            flipchart = 0;    
+        }else{
+            flipchart = 1;    
+        }
+    }
+
     
     // Countdown start
     count = 18001;                                   // Time in 1ms chunks
